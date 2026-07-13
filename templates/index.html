@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habib Lab's AI — Emotional TTS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🔊</div>
+            <span class="logo-text">Habib Lab's AI</span>
+        </div>
+        <div class="header-right">
+            <div class="share-group">
+                <button class="btn-share" onclick="shareOn('facebook')" title="Share on Facebook"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></button>
+                <button class="btn-share" onclick="shareOn('twitter')" title="Share on Twitter"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
+                <button class="btn-share btn-whatsapp" onclick="shareOn('whatsapp')" title="Share on WhatsApp"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></button>
+                <button class="btn-share" onclick="shareOn('email')" title="Share via Email"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></button>
+            </div>
+            <a class="btn-coffee" href="https://jazzcash.com.pk/" target="_blank" rel="noopener">☕ Buy Me Coffee</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- INTRO CARD -->
+        <div class="intro-card" id="introCard">
+            <div class="intro-content">
+                <h1>Text to Speech</h1>
+                <p>Type emotion tags like <strong>[happy]</strong>, <strong>[sad]</strong>, <strong>[laughs]</strong> directly in your script — just like ElevenLabs v3.</p>
+                <button class="intro-btn" onclick="document.getElementById('introCard').style.display='none'; document.getElementById('workspace').style.display='flex';">Get Started</button>
+            </div>
+        </div>
+
+        <!-- WORKSPACE -->
+        <div class="workspace" id="workspace" style="display:none;">
+            <!-- LEFT: Text Editor -->
+            <div class="text-panel">
+                <!-- QUICK TAGS -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🏷️</span>
+                        <span class="card-title">Quick Tags</span>
+                    </div>
+                    <p class="card-desc">Click to insert at cursor:</p>
+                    <div class="tag-presets">
+                        <button class="tag-btn blue" onclick="insertTag('[happy]')">😊 [happy]</button>
+                        <button class="tag-btn blue" onclick="insertTag('[sad]')">😢 [sad]</button>
+                        <button class="tag-btn red" onclick="insertTag('[angry]')">😠 [angry]</button>
+                        <button class="tag-btn yellow" onclick="insertTag('[excited]')">🤩 [excited]</button>
+                        <button class="tag-btn green" onclick="insertTag('[calm]')">🧘 [calm]</button>
+                        <button class="tag-btn purple" onclick="insertTag('[whisper]')">🤫 [whisper]</button>
+                        <button class="tag-btn purple" onclick="insertTag('[loving]')">💕 [loving]</button>
+                        <button class="tag-btn green" onclick="insertTag('[laughs]')">😂 [laughs]</button>
+                        <button class="tag-btn blue" onclick="insertTag('[sighs]')">😮‍💨 [sighs]</button>
+                        <button class="tag-btn yellow" onclick="insertTag('[gasps]')">😲 [gasps]</button>
+                        <button class="tag-btn red" onclick="insertTag('[shouts]')">📢 [shouts]</button>
+                        <button class="tag-btn purple" onclick="insertTag('[sings]')">🎵 [sings]</button>
+                    </div>
+                    <p class="card-hint"><strong>Example:</strong> "Welcome back. [laughs] I didn't expect to see you! [whispers] Keep this secret."</p>
+                </div>
+
+                <!-- SCRIPT INPUT -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">📝</span>
+                        <span class="card-title">Your Script</span>
+                    </div>
+                    <div class="editor-container">
+                        <div class="editor-backdrop" id="editorBackdrop"></div>
+                        <textarea class="main-textarea" id="textInput" placeholder="Enter your script here... Use [happy], [sad], [laughs] tags for emotions.&#10;&#10;Example:&#10;Welcome to my channel! [happy] Today we're exploring AI. [excited] This is going to be amazing!" oninput="handleInput()" onscroll="syncScroll()" maxlength="5000"></textarea>
+                    </div>
+                    <div class="char-counter"><span id="charCount">0</span> / 5000 characters</div>
+                    <div class="detected-section">
+                        <span class="detected-label">Detected tags:</span>
+                        <div class="detected-tags" id="detectedTags">
+                            <span class="detected-hint">None yet — add tags above</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GENERATE -->
+                <div class="generate-section">
+                    <button class="generate-btn" id="genBtn" onclick="generateSpeech()"><span>🎙️</span> Generate Speech</button>
+                </div>
+
+                <!-- AUDIO PLAYER -->
+                <div class="audio-player" id="audioPlayer">
+                    <div class="result-meta" id="resultMeta"></div>
+                    <audio id="audioElement" controls></audio>
+                    <div class="action-btns">
+                        <button class="btn-action" style="flex:1;" onclick="downloadAudio()">⬇️ Download WAV</button>
+                        <button class="btn-action btn-outline" style="flex:1;" onclick="generateAgain()">🔄 Regenerate</button>
+                    </div>
+                </div>
+
+                <!-- HISTORY -->
+                <div class="card" id="historyCard" style="margin-top:20px;">
+                    <div class="card-header">
+                        <span class="card-icon">📜</span>
+                        <span class="card-title">Generation History</span>
+                    </div>
+                    <div id="historyList">
+                        <p class="empty-history">Your generated voiceovers will appear here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Controls -->
+            <div class="controls-panel">
+                <!-- VOICE SELECT -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🎤</span>
+                        <span class="card-title">Voice</span>
+                    </div>
+                    <div class="voice-pills" id="voicePills"></div>
+                </div>
+
+                <!-- SLIDERS -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🎚️</span>
+                        <span class="card-title">Voice Settings</span>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">Stability</span>
+                            <span class="slider-value" id="stabilityVal">50%</span>
+                        </div>
+                        <input type="range" class="range-slider" id="stability" min="0" max="100" value="50" oninput="updateSliderVal('stability')">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">Clarity + Similarity</span>
+                            <span class="slider-value" id="clarityVal">75%</span>
+                        </div>
+                        <input type="range" class="range-slider" id="clarity" min="0" max="100" value="75" oninput="updateSliderVal('clarity')">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">Style Exaggeration</span>
+                            <span class="slider-value" id="styleVal">30%</span>
+                        </div>
+                        <input type="range" class="range-slider" id="style" min="0" max="100" value="30" oninput="updateSliderVal('style')">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-ring"></div>
+        <div class="loading-text">Generating speech...</div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
