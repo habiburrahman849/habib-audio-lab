@@ -269,7 +269,12 @@ export default function StudioPage() {
         return;
       }
 
-      // data.audio_url is relative e.g. /api/audio/abc123.wav
+      if (!data.audio_url) {
+        setGenError('No audio URL returned by the backend.');
+        setGenerating(false);
+        return;
+      }
+
       setAudioUrl(data.audio_url);
 
       // Pre-load audio to get real duration
