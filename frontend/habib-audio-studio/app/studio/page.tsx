@@ -32,7 +32,7 @@ const GEN_STEPS = [
   '🚀 Almost ready!',
 ];
 
-const API_URL   = '/api';
+const API_URL   = 'http://localhost:5000/api';
 const MAX_CHARS = 5000;
 
 const DEFAULT_SCRIPT =
@@ -275,10 +275,15 @@ export default function StudioPage() {
         return;
       }
 
-      setAudioUrl(data.audio_url);
+      // Resolve the audio url using the API_URL if it is relative
+      const resolvedAudioUrl = data.audio_url.startsWith('http')
+        ? data.audio_url
+        : `${API_URL.replace(/\/api$/, '')}${data.audio_url}`;
+
+      setAudioUrl(resolvedAudioUrl);
 
       // Pre-load audio to get real duration
-      const audio = new Audio(data.audio_url);
+      const audio = new Audio(resolvedAudioUrl);
       audioRef.current = audio;
       audio.addEventListener('loadedmetadata', () => setDuration(Math.floor(audio.duration)));
       audio.addEventListener('timeupdate', () => setElapsed(Math.floor(audio.currentTime)));

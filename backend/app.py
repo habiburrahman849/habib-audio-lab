@@ -213,11 +213,6 @@ def generate():
         voice_id = VOICES[voice_name]
         print(f"Using voice_id={voice_id}", flush=True)
 
-        try:
-            kokoro.create("hi", voice=voice_id, speed=1.0, lang="en-us")
-            print(f"Voice {voice_id} loaded", flush=True)
-        except Exception as ve:
-            print(f"Voice load warning: {ve}", flush=True)
 
         detected_tags = extract_tags_info(text)
         has_tags      = bool(detected_tags)
