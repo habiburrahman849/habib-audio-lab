@@ -21,6 +21,8 @@ voices.bin
 # Audio outputs
 voice/*.wav
 backend/voice/*.wav
+voice/*.mp3
+backend/voice/*.mp3
 
 # IDEs
 .idea/
@@ -29,3 +31,6 @@ backend/voice/*.wav
 # Node/Next.js (if any in root)
 node_modules/
 .next/
+
+# Local Hugging Face clone
+habib-audio-lab/
