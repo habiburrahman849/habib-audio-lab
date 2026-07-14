@@ -35,14 +35,14 @@ def internal_error(e):
 # --- CONFIG ---
 VOICES = {
     "Maira":  "af",
-    "Hania":  "af_bella",
+    "Hania":  "af_nicole",
     "Saniya": "af_nicole",
     "Fatma":  "af_sarah",
     "Ayesha": "af_sky",
     "Maria":  "af",
     "Sara":   "af_bella",
-    "salma":  "af_nicole",
-    "Aneela": "af_sarah",
+    "salma":  "af_sarah",
+    "Aneela": "af_sky",
 }
 
 EMOTION_SPEEDS = {
@@ -123,17 +123,10 @@ preload_voices()
 
 def parse_emotion_tags(text):
     """Parse inline emotion tags. Always returns valid segments."""
-    speed_tags = {
-        '[happy]': 1.05, '[sad]': 0.75, '[angry]': 1.15,
-        '[excited]': 1.2, '[calm]': 0.85, '[whisper]': 0.7,
-        '[loving]': 0.9, '[neutral]': 1.0,
-        '[laughs]': 1.1, '[sighs]': 0.8, '[gasps]': 1.3,
-        '[shouts]': 1.2, '[sings]': 1.1,
-    }
-
     parts = TAG_PATTERN.split(text)
     segments = []
     current_speed = 1.0
+    pending_prefix = ""
 
     for part in parts:
         part = part.strip()
@@ -141,13 +134,28 @@ def parse_emotion_tags(text):
             continue
 
         tag_key = part.lower()
-        if tag_key in speed_tags:
-            current_speed = speed_tags[tag_key]
+        if tag_key in TAG_MAP:
+            current_speed = TAG_MAP[tag_key][1]
+            prefix = TAG_MAP[tag_key][2]
+            if prefix:
+                if pending_prefix:
+                    pending_prefix += " " + prefix
+                else:
+                    pending_prefix = prefix
         else:
+            if pending_prefix:
+                part = pending_prefix + part
+                pending_prefix = ""
             segments.append({
                 'text': part,
                 'speed': current_speed
             })
+
+    if pending_prefix:
+        segments.append({
+            'text': pending_prefix,
+            'speed': current_speed
+        })
 
     if not segments:
         segments = [{'text': text, 'speed': 1.0}]
