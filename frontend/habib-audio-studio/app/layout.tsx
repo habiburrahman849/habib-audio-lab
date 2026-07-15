@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Habib Audio Studio",
   description: "Transform text into lifelike speech in seconds.",
+  icons: {
+    icon: "/myimg.png",
+  },
 };
 
 export default function RootLayout({
