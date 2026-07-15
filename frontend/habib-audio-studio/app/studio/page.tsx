@@ -32,7 +32,7 @@ const GEN_STEPS = [
   '🚀 Almost ready!',
 ];
 
-const API_URL   = '/api';
+const API_URL   = 'http://localhost:5000/api';
 const MAX_CHARS = 5000;
 
 const DEFAULT_SCRIPT =
@@ -336,14 +336,25 @@ export default function StudioPage() {
 
       clearInterval(ticker);
       clearInterval(pollInterval);
-      setGenProgress(null);
 
       if (!res.ok || !data.success) {
+        setGenProgress(null);
         const detail = data.traceback ? `\n${data.traceback.split('\n').slice(-3).join('\n')}` : '';
         setGenError((data.error || `Server error ${res.status}`) + detail);
         setGenerating(false);
         return;
       }
+
+      setGenProgress((prev: any) => prev ? {
+        ...prev,
+        percent: 100,
+        status: 'Audio ready!',
+        estimated_remaining: '0 seconds'
+      } : null);
+
+      setTimeout(() => {
+        setGenProgress(null);
+      }, 1500);
 
       if (!data.audio_url) {
         setGenError('No audio URL returned by the backend.');
