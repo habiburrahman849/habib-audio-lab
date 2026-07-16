@@ -1,3 +1,13 @@
+---
+title: Habib Audio Lab
+emoji: 🎙️
+colorFrom: green
+colorTo: emerald
+sdk: gradio
+pinned: false
+license: mit
+---
+
 # 🕌 Habib Lab's — AI Muslim Female TTS
 **Powered by Habib Brains** · Kokoro TTS Engine
 

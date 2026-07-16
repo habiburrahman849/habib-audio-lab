@@ -32,7 +32,7 @@ const GEN_STEPS = [
   '🚀 Almost ready!',
 ];
 
-const API_URL   = 'http://localhost:5000/api';
+const API_URL   = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 const MAX_CHARS = 5000;
 
 const DEFAULT_SCRIPT =
