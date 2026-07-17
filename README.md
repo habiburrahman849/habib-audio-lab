@@ -2,7 +2,7 @@
 title: Habib Audio Lab
 emoji: 🎙️
 colorFrom: green
-colorTo: emerald
+colorTo: green
 sdk: gradio
 pinned: false
 license: mit
