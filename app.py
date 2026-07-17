@@ -113,4 +113,9 @@ with gr.Blocks(title="Habib Audio Lab Backend") as demo:
     demo.load(fn=dummy_gpu_check, outputs=gpu_status)
 
 # Mount the Gradio app to FastAPI
-app = gr.mount_to_webapp(demo, app)
+app = gr.mount_gradio_app(app, demo, path="/")
+
+if __name__ == "__main__":
+    import uvicorn
+    print("Starting API gateway server on port 7860...")
+    uvicorn.run(app, host="0.0.0.0", port=7860)
