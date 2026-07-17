@@ -12,11 +12,11 @@ sys.stdout.reconfigure(encoding="utf-8")
 # Model files and their download URLs (primary = HuggingFace CDN, fallback = GitHub)
 MODELS = {
     "kokoro-v0_19.onnx": [
-        "https://huggingface.co/hexgrad/Kokoro-82M/resolve/main/kokoro-v0_19.onnx",
+        "https://huggingface.co/thewh1teagle/Kokoro/resolve/main/kokoro-v0_19.onnx",
         "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/kokoro-v0_19.onnx",
     ],
     "voices.bin": [
-        "https://huggingface.co/hexgrad/Kokoro-82M/resolve/main/voices.bin",
+        "https://huggingface.co/thewh1teagle/Kokoro/resolve/main/voices.bin",
         "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.bin",
     ],
 }
