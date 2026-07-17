@@ -161,12 +161,9 @@ with gr.Blocks(title="Habib Audio Lab Backend") as demo:
 app = gr.mount_gradio_app(app, demo, path="/")
 
 if __name__ == "__main__":
-    # In Hugging Face Spaces, SPACE_ID environment variable is set automatically.
-    # Hugging Face runs its own uvicorn process hosting the exported `app` object.
-    # We only run uvicorn manually if we are executing locally.
-    if "SPACE_ID" not in os.environ:
-        import uvicorn
-        print("Starting API gateway server on port 7860...")
-        uvicorn.run(app, host="0.0.0.0", port=7860)
-    else:
-        print("Hugging Face environment detected. Skipping local uvicorn binding to avoid port conflicts.")
+    import uvicorn
+    # Hugging Face sets the PORT environment variable to the correct port we must bind to.
+    # Locally, it will default to 7860.
+    port = int(os.environ.get("PORT", 7860))
+    print(f"Starting API gateway server on port {port}...")
+    uvicorn.run(app, host="0.0.0.0", port=port)
