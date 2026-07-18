@@ -3,6 +3,12 @@
 
 import os
 import sys
+
+# Set Gradio's internal ports to non-conflicting values before importing Gradio.
+# This prevents Gradio's Node/SSR helper server from binding to 7860 and conflicting with Uvicorn.
+os.environ["GRADIO_SERVER_PORT"] = "7865"
+os.environ["GRADIO_NODE_PORT"] = "7866"
+
 import threading
 import time
 import requests
