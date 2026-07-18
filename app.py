@@ -3,12 +3,6 @@
 
 import os
 import sys
-
-# Set Gradio's internal ports to non-conflicting values before importing Gradio.
-# This prevents Gradio's Node/SSR helper server from binding to 7860 and conflicting with Uvicorn.
-os.environ["GRADIO_SERVER_PORT"] = "7865"
-os.environ["GRADIO_NODE_PORT"] = "7866"
-
 import threading
 import time
 import requests
@@ -163,8 +157,8 @@ with gr.Blocks(title="Habib Audio Lab Backend") as demo:
     gpu_status = gr.State(value="")
     demo.load(fn=dummy_gpu_check, outputs=gpu_status)
 
-# Mount the Gradio app to FastAPI
-app = gr.mount_gradio_app(app, demo, path="/")
+# Mount the Gradio app to FastAPI with SSR disabled to prevent internal Node.js port conflicts
+app = gr.mount_gradio_app(app, demo, path="/", ssr_mode=False)
 
 if __name__ == "__main__":
     import uvicorn
